@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func solveNQueens(n int) [][]string {
+func totalNQueens(n int) int {
 	var board []string
 	rowInitStr := ""
 	for i := 0; i < n; i++ {
@@ -14,18 +14,18 @@ func solveNQueens(n int) [][]string {
 	return recursion(board, 0)
 }
 
-func recursion(board []string, depth int) [][]string {
-	result := [][]string{}
+func recursion(board []string, depth int) int {
+	result := 0
 	if depth == len(board) {
 		copied := make([]string, len(board))
 		copy(copied, board)
-		return append(result, copied)
+		return 1
 	}
 
 	for j := 0; j < len(board); j++ {
 		if isValid(board, depth, j) {
 			board[depth] = board[depth][:j] + "Q" + board[depth][j+1:]
-			result = append(result, recursion(board, depth+1)...)
+			result += recursion(board, depth+1)
 			board[depth] = board[depth][:j] + "." + board[depth][j+1:]
 		}
 	}
@@ -47,6 +47,6 @@ func isValid(board []string, x, y int) bool {
 
 func main() {
 	for testCase := 1; testCase <= 9; testCase++ {
-		fmt.Println(testCase, solveNQueens(testCase))
+		fmt.Println(testCase, totalNQueens(testCase))
 	}
 }
