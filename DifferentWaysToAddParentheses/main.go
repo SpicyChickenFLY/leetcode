@@ -1,6 +1,8 @@
+package main
+
 import (
-	"fmt"
-	"sort"
+	"strconv"
+	"strings"
 )
 
 func diffWaysToCompute(expression string) []int {
