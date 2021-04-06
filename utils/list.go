@@ -1,5 +1,6 @@
 package utils
 
+// List is a interface
 type List interface {
 	GetHead()
 	GetTail()
@@ -9,17 +10,27 @@ type List interface {
 	PopBack()
 }
 
+// MyListNode is a node structure for linklisk
 type MyListNode struct {
 	Value interface{}
-	Next  *ListNode
+	Next  *MyListNode
 }
 
-func NewMyList(initVals []interface{}) *ListNode {
-	newList = nil
-	for i := len(initVals) - 1, i >= 0; i-- {
-		newList := &ListNode{Value: initVals[i], Next: ms.top}
+// MyList is my inplemention for linkList
+type MyList struct {
+	Head *MyListNode
+}
+
+// NewMyList initalize new MyList
+func NewMyList(initVals []interface{}) *MyList {
+	var newHead *MyListNode
+	for i := len(initVals) - 1; i >= 0; i-- {
+		newHead = &MyListNode{Value: initVals[i], Next: newHead}
 	}
-	return newList
+	return &MyList{Head: newHead}
 }
 
-func (l *ListNode) Print() {}
+// Print all nodes in list
+func (l *MyListNode) Print() {}
+
+// 判断是否有回路
