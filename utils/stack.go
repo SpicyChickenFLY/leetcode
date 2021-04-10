@@ -2,6 +2,7 @@ package utils
 
 import "errors"
 
+// Stack is a data structure interface
 type Stack interface {
 	IsEmpty() bool
 	Push(value interface{})
@@ -9,30 +10,34 @@ type Stack interface {
 	Pop() (interface{}, error)
 }
 
+// MyStack my inplemention for Stack
 type MyStack struct {
-	top  *ListNode
+	top  *MyListNode
 	size int
 }
 
-/** Initialize your data structure here. */
+// NewMyStack initialize MyStack here.
 func NewMyStack(initVals []interface{}) *MyStack {
 	newStack := &MyStack{
 		top: nil,
 	}
-	for _, initVal := range InitVals {
+	for _, initVal := range initVals {
 		newStack.Push(initVal)
 	}
 	return newStack
 }
 
+// IsEmpty chech the top ptr
 func (ms *MyStack) IsEmpty() bool {
 	return ms.top == nil
 }
 
+// Push add new head as top ptr
 func (ms *MyStack) Push(value interface{}) {
-	ms.top = &ListNode{Value: value, Next: ms.top}
+	ms.top = &MyListNode{Value: value, Next: ms.top}
 }
 
+// Top return the value of top ptr
 func (ms *MyStack) Top() (interface{}, error) {
 	if ms.top == nil {
 		return nil, errors.New("Empty Stack")
@@ -40,6 +45,7 @@ func (ms *MyStack) Top() (interface{}, error) {
 	return ms.top.Value, nil
 }
 
+// Pop move the top ptr to next an return current
 func (ms *MyStack) Pop() (interface{}, error) {
 	if ms.top == nil {
 		return nil, errors.New("Empty Stack")
