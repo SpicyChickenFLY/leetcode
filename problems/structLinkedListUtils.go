@@ -20,15 +20,23 @@ func newList(vals []int) *ListNode {
 
 func compareTwoList(l1, l2 *ListNode) bool {
     for l1 != nil || l2 != nil {
-        if l1 == nil || l2 == nil {
+        if l1 == nil {
+            fmt.Printf("->nil(%d)\n", l2.Val)
+            return false
+        }
+        if l2 == nil {
+            fmt.Printf("->%d(nil)\n", l1.Val)
             return false
         }
         if l1.Val != l2.Val {
+            fmt.Printf("->%d(%d)\n", l1.Val, l2.Val)
             return false
         }
+        fmt.Printf("->%d(%d)", l1.Val, l2.Val)
         l1 = l1.Next
         l2 = l2.Next
     }
+    fmt.Println("->nil(nil)")
     return true
 }
 
