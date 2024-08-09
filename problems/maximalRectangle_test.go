@@ -8,15 +8,15 @@ import (
 )
 
 func maximalRectangle(matrix [][]byte) int {
+	height, width := len(matrix), len(matrix[0])
 	// 记录坐标向右的最大长度
-	// 这部分大家的算法基本差不多
-	flag := make([][]int, len(matrix))
-	for i := 0; i < len(matrix); i++ {
-		flag[i] = make([]int, len(matrix[0]))
-		if matrix[i][len(matrix[0]) - 1] == '1' {
-			flag[i][len(matrix[0]) - 1] = 1
+	flag := make([][]int, height)
+	for i := 0; i < height; i++ {
+		flag[i] = make([]int, width)
+		if matrix[i][width - 1] == '1' {
+			flag[i][width - 1] = 1
 		}
-		for j := len(matrix[0]) - 2; j >= 0; j-- {
+		for j := width - 2; j >= 0; j-- {
 			if matrix[i][j] == '1' {
 				flag[i][j] = flag[i][j+1] + 1
 			}
@@ -24,24 +24,20 @@ func maximalRectangle(matrix [][]byte) int {
 	}
 
 	// 计算每个坐标的最大的矩阵面积
-	// 这部分好像有些算法用栈解决, 尝试优化一下
 	maxVal := flag[0][0]
-	for j := 0; j < len(matrix[0]); j++ {
-		for i := 0; i < len(matrix); i++ {
-			minVal := flag[i][j]
-			if minVal > maxVal {
-				maxVal = minVal
+	for j := 0; j < width; j++ {
+		for i := 0; i < height; i++ {
+			if (height - i) * (width - j) < maxVal {
+				break // 长宽都太短了,接下来都不可能更大了
 			}
-			for ii := i + 1; ii < len(matrix); ii++ {
+			minVal := flag[i][j]
+			maxVal = max(maxVal, minVal)
+			for ii := i + 1; ii < height; ii++ {
 				if flag[ii][j] == 0 {
-					break
+					break // 高度中断
 				}
-				if flag[ii][j] <= minVal {
-					minVal = flag[ii][j]
-				}
-				if minVal * (ii - i + 1) > maxVal {
-					maxVal = minVal * (ii - i + 1)
-				}
+				minVal = min(minVal, flag[ii][j])
+				maxVal = max(maxVal, minVal * (ii - i + 1))
 			}
 		}
 	}
