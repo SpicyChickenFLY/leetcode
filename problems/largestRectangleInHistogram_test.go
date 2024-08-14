@@ -7,29 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type intStack struct {
-	linkList *intStackNode
-}
-type intStackNode struct {
-	next *intStackNode
-	val  int
-}
-func newIntStack() *intStack {
-	return &intStack{nil}
-}
-func (s *intStack) peek() int {
-	return s.linkList.val
-}
-func (s *intStack) pop() int {
-	popVal := s.linkList.val
-	s.linkList = s.linkList.next
-	return popVal
-}
-func (s *intStack) push(val int) {
-	newNode := &intStackNode{s.linkList, val}
-	s.linkList = newNode
-}
-
 type Range struct {
 	leftBorder    int // 记录划定区域的左边界
 	minHeight int // 划定区域的最小高度(左边界的高度, 因为该区域中高度是单调递增)
